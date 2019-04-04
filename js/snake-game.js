@@ -32,7 +32,7 @@ let snake = [
     {x: 220, y: 250},
     {x: 210, y: 250},
 ];
-
+let score = 0;
 // Horizontal velocity
 let dx = 10;
 // Vertical velocity
@@ -51,6 +51,20 @@ function  drawSnakePart(snakePart) {
     ctx.fillRect(snakePart.x, snakePart.y, 10,10);
     ctx.strokeRect(snakePart.x, snakePart.y, 10, 10);
 }
+
+function didGameEnd(){
+    for(let i = 4; i < snake.length; i++){
+        const didCollide = snake[i].x === snake[0].x && snake[i].y === snake[0].y
+        if (didCollide) return true;
+    }
+    const hitLeftWall = snake[0].x < 0;
+    const hitRightWall =snake[0].x > gameCanvas.width - 10;
+    const hitTopWall = snake[0].y < 0;
+    const hitBottomWall = snake[0].y > gameCanvas.height - 10;
+
+    return hitLeftWall || hitRightWall || hitTopWall || hitBottomWall;
+}
+
 function changeDirection(event) {
     const LEFT_KEY = 37;
     const RIGHT_KEY = 39;
@@ -84,16 +98,50 @@ function changeDirection(event) {
 function advanceSnake() {
     const head = {x: snake[0].x + dx, y: snake[0].y + dy};
     snake.unshift(head);
-    snake.pop();
+    const didEatFood = snake[0].x === foodX && snake[0].y === foodY;
+    if (didEatFood){
+        score += 10;
+        document.getElementById("score").innerHTML= score;
+        createFood();
+    } else {
+        snake.pop();
+    }
 }
 // Creating function to move the snake forward smoothly. {
     function main(){
+
+    if (didGameEnd()) return;
+
     setTimeout(function onTick() {
         clearCanvas();
+        drawFood();
         advanceSnake();
         drawSnake();
         main();
     }, 100);
     }
+    //Making food
+    function randomTen(min,max) {
+        return Math.round((Math.random() * (max - min) + min) / 10)*10;
+    }
+    function createFood() {
+        foodX = randomTen(0, gameCanvas.width - 10);
+        foodY = randomTen(0, gameCanvas.height - 10);
+
+        snake.forEach(function isFoodOnSnake(part) {
+            const foodIsOnSnake = part.x == foodX && part.y == foodY;
+            if (foodIsOnSnake) {
+                createFood();
+            }
+        })
+    }
+        function drawFood() {
+            ctx.fillStyle = "purple";
+            ctx.strokeStyle = "darkred";
+            ctx.fillRect(foodX,foodY,10,10);
+            ctx.strokeRect(foodX,foodY,10,10);
+        }
+
+createFood();
 main();
 document.addEventListener("keydown", changeDirection)
