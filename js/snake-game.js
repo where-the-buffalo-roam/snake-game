@@ -174,3 +174,5 @@ function advanceSnake() {
 createFood();
 main();
 document.addEventListener("keydown", changeDirection)
+
+// snake!
