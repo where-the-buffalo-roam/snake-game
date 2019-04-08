@@ -109,16 +109,45 @@ function advanceSnake() {
 }
 // Creating function to move the snake forward smoothly. {
     function main(){
+    if (didGameEnd()) {
+        alert("You lose! Your final score was " + score + " points.")
+        return;}
+    if(score >= 300){
+        setTimeout(function onTick() {
+            clearCanvas();
+            drawFood();
+            advanceSnake();
+            drawSnake();
+            main();
+        }, 50);
 
-    if (didGameEnd()) return;
-
-    setTimeout(function onTick() {
-        clearCanvas();
-        drawFood();
-        advanceSnake();
-        drawSnake();
-        main();
-    }, 100);
+    } else if (score >= 50 && score < 100) {
+        setTimeout(function onTick() {
+            clearCanvas();
+            drawFood();
+            advanceSnake();
+            drawSnake();
+            main();
+        }, 90);
+    }
+    else if(score >= 100 && score < 300){
+        setTimeout(function onTick() {
+            clearCanvas();
+            drawFood();
+            advanceSnake();
+            drawSnake();
+            main();
+        }, 70);
+    }
+    else{
+        setTimeout(function onTick() {
+            clearCanvas();
+            drawFood();
+            advanceSnake();
+            drawSnake();
+            main();
+        }, 100);
+    }
     }
     //Making food
     function randomTen(min,max) {
