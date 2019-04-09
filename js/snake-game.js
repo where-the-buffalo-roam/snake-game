@@ -57,12 +57,31 @@ function didGameEnd(){
         const didCollide = snake[i].x === snake[0].x && snake[i].y === snake[0].y
         if (didCollide) return true;
     }
+    // const hitLeftWall = snake[0].x < 0;
+    // const hitRightWall =snake[0].x > gameCanvas.width - 10;
+    // const hitTopWall = snake[0].y < 0;
+    // const hitBottomWall = snake[0].y > gameCanvas.height - 10;
+    //
+    // return hitLeftWall || hitRightWall || hitTopWall || hitBottomWall;
+}
+function pacManWall() {
     const hitLeftWall = snake[0].x < 0;
     const hitRightWall =snake[0].x > gameCanvas.width - 10;
     const hitTopWall = snake[0].y < 0;
     const hitBottomWall = snake[0].y > gameCanvas.height - 10;
 
-    return hitLeftWall || hitRightWall || hitTopWall || hitBottomWall;
+    if(hitLeftWall){
+        snake[0].x=gameCanvas.width - 10;
+    }
+    if(hitRightWall){
+        snake[0].x=0;
+    }
+    if(hitTopWall){
+        snake[0].y=gameCanvas.height - 10;
+    }
+    if(hitBottomWall){
+        snake[0].y=0;
+    }
 }
 
 function changeDirection(event) {
@@ -96,6 +115,7 @@ function changeDirection(event) {
 }
 //creating a function to advance the snake
 function advanceSnake() {
+    pacManWall();
     const head = {x: snake[0].x + dx, y: snake[0].y + dy};
     snake.unshift(head);
     const didEatFood = snake[0].x === foodX && snake[0].y === foodY;
@@ -108,7 +128,7 @@ function advanceSnake() {
     }
 }
 // Creating function to move the snake forward smoothly. {
-    function main(){
+function main(){
     if (didGameEnd()) {
         alert("You lose! Your final score was " + score + " points.")
         return;}
@@ -174,3 +194,5 @@ function advanceSnake() {
 createFood();
 main();
 document.addEventListener("keydown", changeDirection)
+
+// snake!
