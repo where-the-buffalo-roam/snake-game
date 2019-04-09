@@ -4,6 +4,10 @@
 const CANVAS_BORDER_COLOR = 'black';
 const CANVAS_BACKGROUND_COLOR = "white";
 
+// Game State
+
+var gameState;
+
 // Get Canvas Element
 
 var gameCanvas = document.getElementById("gameCanvas");
@@ -54,13 +58,15 @@ function  drawSnakePart(snakePart) {
 
 function didGameEnd(){
     for(let i = 4; i < snake.length; i++){
-        const didCollide = snake[i].x === snake[0].x && snake[i].y === snake[0].y
+        const didCollide = snake[i].x === snake[0].x && snake[i].y === snake[0].y;
         if (didCollide) return true;
     }
     const hitLeftWall = snake[0].x < 0;
     const hitRightWall =snake[0].x > gameCanvas.width - 10;
     const hitTopWall = snake[0].y < 0;
     const hitBottomWall = snake[0].y > gameCanvas.height - 10;
+
+    setState("GAME OVER");
 
     return hitLeftWall || hitRightWall || hitTopWall || hitBottomWall;
 }
@@ -171,6 +177,17 @@ function advanceSnake() {
             ctx.strokeRect(foodX,foodY,10,10);
         }
 
+        // GAME STATES
+    function setState(state) {
+        gameState = state;
+    }
+
+
+
+
+
+
 createFood();
 main();
-document.addEventListener("keydown", changeDirection)
+document.addEventListener("keydown", changeDirection);
+
