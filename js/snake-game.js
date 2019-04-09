@@ -205,6 +205,6 @@ main();
 document.addEventListener("keydown", changeDirection);
 gameOverMenu = document.getElementById("gameOver");
 
-document.addEventListener("keydown", changeDirection)
+document.addEventListener("keydown", changeDirection);
 
 // snake!
