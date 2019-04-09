@@ -37,7 +37,8 @@ let score = 0;
 let dx = 10;
 // Vertical velocity
 let dy = 0;
-
+let tempdx=dx;
+let tempdy=dy;
 // Functions
 
 // Creating and drawing the snake
@@ -97,20 +98,20 @@ function changeDirection(event) {
     const goingLeft = dx === -10;
 
     if (keyPressed === LEFT_KEY && !goingRight){
-        dx = -10;
-        dy = 0;
+        tempdx = -10;
+        tempdy = 0;
     }
     if (keyPressed === UP_KEY && !goingDown){
-        dx = 0;
-        dy = -10;
+        tempdx = 0;
+        tempdy = -10;
     }
     if (keyPressed === RIGHT_KEY && !goingLeft) {
-        dx = 10;
-        dy = 0;
+        tempdx = 10;
+        tempdy = 0;
     }
     if (keyPressed === DOWN_KEY && !goingUp) {
-        dx = 0;
-        dy = 10;
+        tempdx = 0;
+        tempdy = 10;
     }
 }
 //creating a function to advance the snake
@@ -134,6 +135,8 @@ function main(){
         return;}
     if(score >= 300){
         setTimeout(function onTick() {
+            dx=tempdx;
+            dy=tempdy;
             clearCanvas();
             drawFood();
             advanceSnake();
@@ -143,6 +146,8 @@ function main(){
 
     } else if (score >= 50 && score < 100) {
         setTimeout(function onTick() {
+            dx=tempdx;
+            dy=tempdy;
             clearCanvas();
             drawFood();
             advanceSnake();
@@ -152,6 +157,8 @@ function main(){
     }
     else if(score >= 100 && score < 300){
         setTimeout(function onTick() {
+            dx=tempdx;
+            dy=tempdy;
             clearCanvas();
             drawFood();
             advanceSnake();
@@ -161,6 +168,8 @@ function main(){
     }
     else{
         setTimeout(function onTick() {
+            dx=tempdx;
+            dy=tempdy;
             clearCanvas();
             drawFood();
             advanceSnake();
