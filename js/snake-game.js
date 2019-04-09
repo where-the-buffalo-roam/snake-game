@@ -4,10 +4,6 @@
 const CANVAS_BORDER_COLOR = 'black';
 const CANVAS_BACKGROUND_COLOR = "white";
 
-// Game State
-
-var gameState;
-
 // Get Canvas Element
 
 var gameCanvas = document.getElementById("gameCanvas");
@@ -66,7 +62,6 @@ function didGameEnd(){
     const hitTopWall = snake[0].y < 0;
     const hitBottomWall = snake[0].y > gameCanvas.height - 10;
 
-    setState("GAME OVER");
 
     return hitLeftWall || hitRightWall || hitTopWall || hitBottomWall;
 }
@@ -116,7 +111,7 @@ function advanceSnake() {
 // Creating function to move the snake forward smoothly. {
     function main(){
     if (didGameEnd()) {
-        alert("You lose! Your final score was " + score + " points.")
+        alert("You lose! Your final score was " + score + " points.");
         return;}
     if(score >= 300){
         setTimeout(function onTick() {
@@ -177,10 +172,7 @@ function advanceSnake() {
             ctx.strokeRect(foodX,foodY,10,10);
         }
 
-        // GAME STATES
-    function setState(state) {
-        gameState = state;
-    }
+
 
 
 
@@ -190,4 +182,5 @@ function advanceSnake() {
 createFood();
 main();
 document.addEventListener("keydown", changeDirection);
+gameOverMenu = document.getElementById("gameOver");
 
