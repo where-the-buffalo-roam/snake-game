@@ -2,17 +2,43 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <title>Carson's Snake Game</title>
     <title>Snake Game</title>
     <link rel="stylesheet" href="css/snake-game.css">
 
 </head>
 <body>
-<h3>Welcome to Snake</h3>
-<div id="score">0</div>
-<canvas id="gameCanvas" width="500" height ="500"></canvas>
 
+<div id="highscore"></div>
+<div id="score">0</div>
+
+<canvas id="gameCanvas" width="500" height ="500">
+
+</canvas>
+<style>
+    #gameCanvas {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    #score {
+        text-align: center;
+        font-size: 140px;
+        font-family: 'Antic Slab', serif;
+    }
+
+    #highscore{
+        text-align: center;
+        font-size: 50px;
+        font-family: 'Antic Slab', serif;
+    }
+
+</style>
 
 <script src="js/snake-game.js"></script>
+
 </body>
 </html>
 

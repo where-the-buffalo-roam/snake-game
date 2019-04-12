@@ -4,6 +4,7 @@
 const CANVAS_BORDER_COLOR = 'black';
 const CANVAS_BACKGROUND_COLOR = "white";
 
+
 // Get Canvas Element
 
 var gameCanvas = document.getElementById("gameCanvas");
@@ -33,6 +34,8 @@ let snake = [
     {x: 210, y: 250},
 ];
 let score = 0;
+
+
 // Horizontal velocity
 let dx = 10;
 // Vertical velocity
@@ -122,17 +125,31 @@ function advanceSnake() {
     const didEatFood = snake[0].x === foodX && snake[0].y === foodY;
     if (didEatFood){
         score += 10;
-        document.getElementById("score").innerHTML= score;
         createFood();
+        document.getElementById("score").innerHTML= score;
     } else {
         snake.pop();
+
     }
+
+    let storedHighscore = localStorage.getItem("high_score");
+    if (score > parseInt(storedHighscore)){
+        localStorage.setItem("high_score", score);
+    }
+
+    document.getElementById("highscore").innerHTML = localStorage.getItem("high_score");
 }
+
+// HIGHSCORE
+
+
 // Creating function to move the snake forward smoothly. {
 function main(){
     if (didGameEnd()) {
-        alert("You lose! Your final score was " + score + " points.")
-        return;}
+        alert("GAME OVER!!!" + " Your score was " + score);
+        document.location.reload();
+        clearInterval(interval);
+    }
     if(score >= 300){
         setTimeout(function onTick() {
             dx=tempdx;
@@ -177,31 +194,32 @@ function main(){
             main();
         }, 100);
     }
-    }
-    //Making food
-    function randomTen(min,max) {
-        return Math.round((Math.random() * (max - min) + min) / 10)*10;
-    }
-    function createFood() {
-        foodX = randomTen(0, gameCanvas.width - 10);
-        foodY = randomTen(0, gameCanvas.height - 10);
+}
+//Making food
+function randomTen(min,max) {
+    return Math.round((Math.random() * (max - min) + min) / 10)*10;
+}
+function createFood() {
+    foodX = randomTen(0, gameCanvas.width - 10);
+    foodY = randomTen(0, gameCanvas.height - 10);
 
-        snake.forEach(function isFoodOnSnake(part) {
-            const foodIsOnSnake = part.x == foodX && part.y == foodY;
-            if (foodIsOnSnake) {
-                createFood();
-            }
-        })
-    }
-        function drawFood() {
-            ctx.fillStyle = "purple";
-            ctx.strokeStyle = "darkred";
-            ctx.fillRect(foodX,foodY,10,10);
-            ctx.strokeRect(foodX,foodY,10,10);
+    snake.forEach(function isFoodOnSnake(part) {
+        const foodIsOnSnake = part.x == foodX && part.y == foodY;
+        if (foodIsOnSnake) {
+            createFood();
         }
+    })
+}
+function drawFood() {
+    ctx.fillStyle = "purple";
+    ctx.strokeStyle = "darkred";
+    ctx.fillRect(foodX,foodY,10,10);
+    ctx.strokeRect(foodX,foodY,10,10);
+}
 
 createFood();
 main();
-document.addEventListener("keydown", changeDirection)
+document.addEventListener("keydown", changeDirection);
+
 
 // snake!
