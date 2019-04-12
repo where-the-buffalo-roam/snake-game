@@ -150,7 +150,18 @@ function main(){
         document.location.reload();
         clearInterval(interval);
     }
-    if(score >= 300){
+    if(score >= 600 && score < 900) {
+        setTimeout(function onTick() {
+            dx = tempdx;
+            dy = tempdy;
+            clearCanvas();
+            drawFood();
+            advanceSnake();
+            drawSnake();
+            main();
+        }, 30);
+
+    } else if(score >= 300 && score < 600){
         setTimeout(function onTick() {
             dx=tempdx;
             dy=tempdy;
@@ -170,7 +181,7 @@ function main(){
             advanceSnake();
             drawSnake();
             main();
-        }, 90);
+        }, 80);
     }
     else if(score >= 100 && score < 300){
         setTimeout(function onTick() {
