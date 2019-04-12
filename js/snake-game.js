@@ -133,11 +133,11 @@ function advanceSnake() {
     }
 
     let storedHighscore = localStorage.getItem("high_score");
-    if (score > parseInt(storedHighscore)){
+    if (score > parseInt(storedHighscore) || storedHighscore ===null){
         localStorage.setItem("high_score", score);
+        storedHighscore=score;
     }
-
-    document.getElementById("highscore").innerHTML = localStorage.getItem("high_score");
+    document.getElementById("highscore").innerText = storedHighscore;
 }
 
 // HIGHSCORE
