@@ -1,8 +1,16 @@
+function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+var audio = document.getElementById('song');
+audio.play("song");
 
-// CONSTANTS
-
-const CANVAS_BORDER_COLOR = 'black';
-const CANVAS_BACKGROUND_COLOR = "white";
+var CANVAS_BORDER_COLOR = "white";
+var CANVAS_BACKGROUND_COLOR = 'black';
 
 
 // Get Canvas Element
@@ -12,17 +20,15 @@ var gameCanvas = document.getElementById("gameCanvas");
 // Return a two dimensional drawing context.
 
 var ctx = gameCanvas.getContext("2d");
-
 function clearCanvas() {
 // Selecting the  color to fill the canvas and background
     ctx.fillStyle = CANVAS_BACKGROUND_COLOR;
     ctx.strokeStyle = CANVAS_BORDER_COLOR;
 // Draw a "filled" rectangle to cover the entire canvas
-    ctx.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
+    ctx.fillRect( 0, 0, gameCanvas.width, gameCanvas.height);
 // Draw a border around the entire canvas
     ctx.strokeRect(0, 0, gameCanvas.width, gameCanvas.height);
 }
-
 
 // Positioning the snake for start
 
@@ -49,8 +55,8 @@ function drawSnake() {
     snake.forEach(drawSnakePart);
 }
 function  drawSnakePart(snakePart) {
-    ctx.fillStyle = 'red';
-    ctx.strokeStyle = "blue";
+    ctx.fillStyle = getRandomColor();
+    ctx.strokeStyle = "black";
 
     ctx.fillRect(snakePart.x, snakePart.y, 10,10);
     ctx.strokeRect(snakePart.x, snakePart.y, 10, 10);
@@ -58,7 +64,7 @@ function  drawSnakePart(snakePart) {
 
 function didGameEnd(){
     for(let i = 4; i < snake.length; i++){
-        const didCollide = snake[i].x === snake[0].x && snake[i].y === snake[0].y
+        const didCollide = snake[i].x === snake[0].x && snake[i].y === snake[0].y;
         if (didCollide) return true;
     }
     // const hitLeftWall = snake[0].x < 0;
@@ -131,7 +137,9 @@ function advanceSnake() {
         snake.pop();
 
     }
-
+    //Speeds up the song for every point earned
+    audio.playbackRate = 1 + (score/450);
+    //Local Storage for High Score
     let storedHighscore = localStorage.getItem("high_score");
     if (score > parseInt(storedHighscore) || storedHighscore ===null){
         localStorage.setItem("high_score", score);
@@ -221,8 +229,10 @@ function createFood() {
         }
     })
 }
+
+
 function drawFood() {
-    ctx.fillStyle = "purple";
+    ctx.fillStyle = getRandomColor();
     ctx.strokeStyle = "darkred";
     ctx.fillRect(foodX,foodY,10,10);
     ctx.strokeRect(foodX,foodY,10,10);
